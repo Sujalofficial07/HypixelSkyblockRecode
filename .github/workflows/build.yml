@@ -9,23 +9,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 21
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '8'
           distribution: 'temurin'
-          cache: maven
-        
-      - name: Build with Maven
-        run: mvn -B package --file SkyblockSandboxBase/pom.xml
-      
 
+      - name: Cache Maven + Spigot
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2
+            ~/spigot
+          key: spigot-1.8.8
+
+      - name: Build Spigot (if not cached)
+        run: |
+          if [ ! -d $HOME/spigot ]; then
+            mkdir $HOME/spigot
+            cd $HOME/spigot
+            wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+            java -Xmx2G -jar BuildTools.jar --rev 1.8.8 --disable-certificate-check
+          fi
+
+      # 👇 IMPORTANT: go into your plugin folder
       - name: Build Plugin
-        run: mvn clean package
+        run: |
+          cd SkyblockSandboxBase
+          mvn clean package
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: plugin
-          path: target/*.jar
+          path: SkyblockSandboxBase/target/*.jar
