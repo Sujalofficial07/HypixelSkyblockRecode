@@ -69,11 +69,6 @@
 <repositories>
 
     <!-- ProtocolLib -->
-    <repository>
-        <id>dmulloy2</id>
-        <url>https://repo.dmulloy2.net/repository/public/</url>
-    </repository>
-
     <!-- PlaceholderAPI -->
     <repository>
         <id>placeholderapi</id>
@@ -113,12 +108,6 @@
             <scope>compile</scope>
         </dependency>
         <!-- ProtocolLib -->
-        <dependency>
-            <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib</artifactId>
-            <version>4.8.0</version>
-            <scope>provided</scope>
-        </dependency>
 
 <!-- PlaceholderAPI -->
         <dependency>
