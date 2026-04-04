@@ -35,16 +35,6 @@ jobs:
             java -Xmx2G -jar BuildTools.jar --rev 1.8.8 --disable-certificate-check
           fi
 
-      - name: Install ProtocolLib manually
-        run: |
-          wget https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/target/ProtocolLib.jar
-          mvn install:install-file \
-          -Dfile=ProtocolLib.jar \
-          -DgroupId=com.comphenix.protocol \
-          -DartifactId=ProtocolLib \
-          -Dversion=4.8.0 \
-          -Dpackaging=jar
-          
       # 👇 IMPORTANT: go into your plugin folder
       - name: Build Plugin
         run: |
